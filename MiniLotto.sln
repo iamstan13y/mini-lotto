@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniLotto.API", "MiniLotto.API\MiniLotto.API.csproj", "{119995AB-F2A1-4B5B-AAB5-BDE6E95FBE27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniLotto.API", "MiniLotto.API\MiniLotto.API.csproj", "{119995AB-F2A1-4B5B-AAB5-BDE6E95FBE27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniLotto.Web", "MiniLotto.Web\MiniLotto.Web.csproj", "{04B21454-24AB-4DA1-839A-0F359C1C3963}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{119995AB-F2A1-4B5B-AAB5-BDE6E95FBE27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{119995AB-F2A1-4B5B-AAB5-BDE6E95FBE27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{119995AB-F2A1-4B5B-AAB5-BDE6E95FBE27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B21454-24AB-4DA1-839A-0F359C1C3963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B21454-24AB-4DA1-839A-0F359C1C3963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B21454-24AB-4DA1-839A-0F359C1C3963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B21454-24AB-4DA1-839A-0F359C1C3963}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,13 +15,13 @@ public class PlayerService : IPlayerService
 
     public async Task<Result<DrawResult>> RunDrawAsync()
     {
-        var users = (await _playerRepository.GetAllPlayersAsync()).Data;
+        var players = (await _playerRepository.GetAllPlayersAsync()).Data;
         var winningNumbers = GenerateWinningNumbers();
-        
-        var winners = users?
-            .Where(u => u.Numbers.Intersect(winningNumbers)
-            .Count() >= 3)
+
+        var winners = players?
+            .Where(u => u.NumberSets.Any(ns => ns.Numbers.Intersect(winningNumbers).Count() >= 3))
             .Select(u => u.Name)
+            .Distinct()
             .ToList();
 
         return new Result<DrawResult>(new DrawResult

@@ -1,8 +1,14 @@
 using MiniLotto.Web.Components;
+using MiniLotto.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var url = $"{builder.Configuration["ApiServices:MiniLottoApi"]}";
+builder.Services.AddHttpClient<IHttpService, HttpService>(c => 
+    c.BaseAddress = new Uri(url));
+
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 

@@ -11,6 +11,7 @@ builder.Services.AddHttpClient<IHttpService, HttpService>(c =>
 
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MiniLotto.API.Models.Data;
 using MiniLotto.API.Models.Local;
 
@@ -30,11 +31,11 @@ public class PlayerRepository : IPlayerRepository
         return new Result<IEnumerable<Player>>(await _context.Players.ToListAsync());
     }
 
-    public async Task<Result<Player>> GetPlayerAsync(int id)
+    public async Task<Result<Player>> GetPlayerAsync(string name)
     {
         try
         {
-            var player = await _context.Players.FindAsync(id);
+            var player = await _context.Players.FirstOrDefaultAsync(x => x.Name == name);
 
             if (player == null) return new Result<Player>(false, "Player not found");
             
@@ -44,6 +45,5 @@ public class PlayerRepository : IPlayerRepository
         {
             return new Result<Player>(false, ex.Message);
         }
-       
     }
 }

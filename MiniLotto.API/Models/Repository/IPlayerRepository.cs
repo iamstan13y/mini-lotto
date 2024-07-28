@@ -6,6 +6,6 @@ namespace MiniLotto.API.Models.Repository;
 public interface IPlayerRepository
 {
     Task<Result<Player>> AddPlayerAsync(Player player);
-    Task<Result<Player>> GetPlayerAsync(int id);
+    Task<Result<Player>> GetPlayerAsync(string name);
     Task<Result<IEnumerable<Player>>> GetAllPlayersAsync();
 }

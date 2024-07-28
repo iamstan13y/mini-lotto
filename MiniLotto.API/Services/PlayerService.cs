@@ -8,7 +8,7 @@ public class PlayerService : IPlayerService
     private readonly IPlayerRepository _playerRepository;
     private static readonly Random _random = new();
 
-    public PlayerService(PlayerRepository playerRepository)
+    public PlayerService(IPlayerRepository playerRepository)
     {
         _playerRepository = playerRepository;
     }

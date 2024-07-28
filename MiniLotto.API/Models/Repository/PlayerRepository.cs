@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MiniLotto.API.Extensions;
 using MiniLotto.API.Models.Data;
 using MiniLotto.API.Models.Local;
 
@@ -20,7 +21,7 @@ public class PlayerRepository(AppDbContext context) : IPlayerRepository
                 await _context.Players.AddAsync(player);
 
             await _context.SaveChangesAsync();
-            return new Result<Player>(player);
+            return new Result<Player>(player.RemoveCycles()!);
 
         }
         catch (Exception ex)
@@ -35,7 +36,7 @@ public class PlayerRepository(AppDbContext context) : IPlayerRepository
             .Include(x => x.NumberSets)
             .ToListAsync();
 
-        return new Result<IEnumerable<Player>>(players);
+        return new Result<IEnumerable<Player>>(players.RemoveCycles());
     }
 
     public async Task<Result<Player>> GetPlayerAsync(string name)
@@ -49,7 +50,7 @@ public class PlayerRepository(AppDbContext context) : IPlayerRepository
 
             if (player == null) return new Result<Player>(false, "Player not found");
 
-            return new Result<Player>(player);
+            return new Result<Player>(player.RemoveCycles()!);
         }
         catch (Exception ex)
         {

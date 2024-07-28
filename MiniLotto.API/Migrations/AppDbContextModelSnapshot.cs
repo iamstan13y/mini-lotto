@@ -21,6 +21,28 @@ namespace MiniLotto.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MiniLotto.API.Models.Data.NumberSet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Numbers")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("NumberSets");
+                });
+
             modelBuilder.Entity("MiniLotto.API.Models.Data.Player", b =>
                 {
                     b.Property<int>("Id")
@@ -33,13 +55,25 @@ namespace MiniLotto.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Numbers")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("MiniLotto.API.Models.Data.NumberSet", b =>
+                {
+                    b.HasOne("MiniLotto.API.Models.Data.Player", "Player")
+                        .WithMany("NumberSets")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Player");
+                });
+
+            modelBuilder.Entity("MiniLotto.API.Models.Data.Player", b =>
+                {
+                    b.Navigation("NumberSets");
                 });
 #pragma warning restore 612, 618
         }

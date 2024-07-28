@@ -9,20 +9,29 @@
 
 <div>
     <label>Name:</label>
-    <input @bind="playerName" name="a" />
+    <input @bind="playerName" />
 </div>
 <div>
     <label>Numbers:</label>
     @for (int i = 0; i < 6; i++)
     {
-        <input type="number" @bind="numbers[i]" min="1" max="12" />
+        var index = i;
+        <input type="number" value="@numbers[index]" @oninput="@(e => OnNumberInput(e, index))" min="1" max="12" />
     }
 </div>
-<button class="btn btn-primary" @onclick="SavePlayer">Save</button>
+<button @onclick="SavePlayer">Save</button>
 
 @code {
     private string playerName;
     private int[] numbers = new int[6];
+
+    private void OnNumberInput(ChangeEventArgs e, int index)
+    {
+        if (int.TryParse(e.Value?.ToString(), out var value))
+        {
+            numbers[index] = value;
+        }
+    }
 
     private async Task SavePlayer()
     {

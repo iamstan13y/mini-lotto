@@ -3,5 +3,5 @@
 public class DrawResult
 {
     public List<int> WinningNumbers { get; set; } = [];
-    public List<string> Winners { get; set; } = [];
+    public List<string>? Winners { get; set; } = [];
 }

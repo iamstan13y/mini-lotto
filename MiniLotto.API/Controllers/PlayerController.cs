@@ -41,7 +41,10 @@ public class PlayerController : ControllerBase
         var result = await _playerRepository.AddPlayerAsync(new Player
         {
             Name = request.Name,
-            Numbers = request.Numbers,
+            NumberSets =
+            [
+                new() { Numbers = request.Numbers }
+            ]
         });
 
         if (!result.Success) return BadRequest(result);

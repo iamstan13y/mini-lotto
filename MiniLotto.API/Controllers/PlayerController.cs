@@ -8,16 +8,10 @@ namespace MiniLotto.API.Controllers;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class PlayerController : ControllerBase
+public class PlayerController(IPlayerRepository playerRepository, IPlayerService playerService) : ControllerBase
 {
-    private readonly IPlayerRepository _playerRepository;
-    private readonly IPlayerService _playerService;
-
-    public PlayerController(IPlayerRepository playerRepository, IPlayerService playerService)
-    {
-        _playerRepository = playerRepository;
-        _playerService = playerService;
-    }
+    private readonly IPlayerRepository _playerRepository = playerRepository;
+    private readonly IPlayerService _playerService = playerService;
 
     [HttpGet]
     public async Task<IActionResult> GetPlayers()
@@ -35,7 +29,7 @@ public class PlayerController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public async Task<IActionResult> AddPlayer(PlayerRequest request)
     {
         var result = await _playerRepository.AddPlayerAsync(new Player

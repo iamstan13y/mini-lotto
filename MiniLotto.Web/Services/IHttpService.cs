@@ -8,4 +8,5 @@ public interface IHttpService
     Task<Result<Player>> AddPlayerAsync(PlayerRequest request);
     Task<Result<Player>> GetPlayerAsync(string name);
     Task<Result<IEnumerable<Player>>> GetAllPlayersAsync();
+    Task<Result<DrawResult>> RunDrawAsync();
 }

@@ -15,7 +15,15 @@ public class PlayerService(IPlayerRepository playerRepository) : IPlayerService
 
         var winners = players?
             .Where(u => u.NumberSets.Any(ns => ns.Numbers.Intersect(winningNumbers).Count() >= 5))
-            .Select(u => u.Name)
+            .Select(u => new WinnerDetail
+            {
+                Name = u.Name,
+                WinningNumbers = u.NumberSets
+                    .Where(ns => ns.Numbers.Intersect(winningNumbers).Count() >= 5)
+                    .SelectMany(ns => ns.Numbers)
+                    .Intersect(winningNumbers)
+                    .ToList()
+            })
             .Distinct()
             .ToList();
 

@@ -1,0 +1,57 @@
+﻿@page "/draw"
+@rendermode InteractiveServer
+
+<PageTitle>Draw Results</PageTitle>
+
+@inject IHttpService _httpService
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card" style="width: 100%; max-width: 600px;">
+        <div class="card-header text-center">
+            <h3>Draw Results</h3>
+        </div>
+        <div class="card-body">
+            <div class="text-center mb-3">
+                <button class="btn btn-primary" @onclick="TriggerDraw">Draw</button>
+            </div>
+            @if (showResults)
+            {
+                <div class="alert">
+                    <h5 class="mb-4">Winning Numbers:</h5>
+                    <div class="row text-center">
+                        @foreach (var number in drawResult?.WinningNumbers ?? new List<int>())
+                        {
+                            <div class="col-2 mb-2">
+                                <div class="number-box" style="font-size:40px; color:indianred; border-block:groove">
+                                    @number
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <h5 class="mt-4">Winners:</h5>
+                    <ul class="list-group">
+                        @foreach (var winner in drawResult?.Winners ?? new List<string>())
+                        {
+                            <li class="list-group-item" style="font-size:25px; color:indianred; border-block:groove">@winner</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private DrawResult drawResult;
+    private bool showResults;
+
+    private async Task TriggerDraw()
+    {
+        var result = await _httpService.RunDrawAsync();
+        if (result.Success)
+        {
+            drawResult = result.Data;
+            showResults = true;
+        }
+    }
+}

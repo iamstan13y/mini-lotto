@@ -46,7 +46,7 @@ public class PlayerController(IPlayerRepository playerRepository, IPlayerService
         return Ok(result);
     }
 
-    [HttpPost("draw")]
+    [HttpGet("draw")]
     public async Task<IActionResult> RunDraw()
     {
         var drawResult = await _playerService.RunDrawAsync();

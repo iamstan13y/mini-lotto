@@ -23,4 +23,10 @@ public class HttpService(HttpClient client) : IHttpService
     {
         throw new NotImplementedException();
     }
+
+    public async Task<Result<DrawResult>> RunDrawAsync()
+    {
+        var response = await _client.GetAsync($"/api/v1/Player/draw");
+        return await response.ReadContentAs<Result<DrawResult>>();
+    }
 }

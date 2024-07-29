@@ -3,15 +3,10 @@ using MiniLotto.API.Models.Repository;
 
 namespace MiniLotto.API.Services;
 
-public class PlayerService : IPlayerService
+public class PlayerService(IPlayerRepository playerRepository) : IPlayerService
 {
-    private readonly IPlayerRepository _playerRepository;
+    private readonly IPlayerRepository _playerRepository = playerRepository;
     private static readonly Random _random = new();
-
-    public PlayerService(IPlayerRepository playerRepository)
-    {
-        _playerRepository = playerRepository;
-    }
 
     public async Task<Result<DrawResult>> RunDrawAsync()
     {
@@ -19,7 +14,7 @@ public class PlayerService : IPlayerService
         var winningNumbers = GenerateWinningNumbers();
 
         var winners = players?
-            .Where(u => u.NumberSets.Any(ns => ns.Numbers.Intersect(winningNumbers).Count() >= 3))
+            .Where(u => u.NumberSets.Any(ns => ns.Numbers.Intersect(winningNumbers).Count() >= 5))
             .Select(u => u.Name)
             .Distinct()
             .ToList();

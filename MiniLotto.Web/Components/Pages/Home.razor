@@ -5,28 +5,50 @@
 
 @inject IHttpService _httpService
 
-<h3>User Input</h3>
+<div class="container mt-5 col-lg-8">
+    <div class="card">
+        <div class="card-header">
+            <h3>Complete this form to contest</h3>
+        </div>
+        <div class="card-body">
+            <form>
+                @if (!string.IsNullOrEmpty(successMessage))
+                {
+                    <div class="alert alert-success mt-3">@successMessage</div>
+                }
+                <div class="form-group mb-3">
+                    <label for="name">Name:</label>
+                    <input id="name" class="form-control" @bind="playerName" placeholder="Enter your name" />
+                </div>
+                <div class="form-group mb-3">
+                    <label>Lucky Numbers:</label>
+                    <div class="d-flex">
+                        @for (int i = 0; i < 6; i++)
+                        {
+                            var index = i;
+                            <input type="number" class="form-control me-2" value="@numbers[index]" @oninput="@(e => OnNumberInput(e, index))" min="1" max="12" style="width: 60px;" />
+                        }
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary" @onclick="SavePlayer">Save</button>
 
-<div>
-    <label>Name:</label>
-    <input @bind="playerName" />
+            </form>
+        </div>
+    </div>
 </div>
-<div>
-    <label>Numbers:</label>
-    @for (int i = 0; i < 6; i++)
-    {
-        var index = i;
-        <input type="number" value="@numbers[index]" @oninput="@(e => OnNumberInput(e, index))" min="1" max="12" />
-    }
-</div>
-<button @onclick="SavePlayer">Save</button>
 
 @code {
     private string playerName;
     private int[] numbers = new int[6];
+    private string successMessage;
 
     private void OnNumberInput(ChangeEventArgs e, int index)
     {
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            successMessage = string.Empty;
+        }
+
         if (int.TryParse(e.Value?.ToString(), out var value))
         {
             numbers[index] = value;
@@ -36,6 +58,12 @@
     private async Task SavePlayer()
     {
         var player = new PlayerRequest { Name = playerName, Numbers = numbers.ToList() };
-        await _httpService.AddPlayerAsync(player);
+        var result = await _httpService.AddPlayerAsync(player);
+        if (result.Success)
+        {
+            successMessage = "Player added successfully!";
+            playerName = string.Empty;
+            numbers = new int[6];
+        }
     }
 }

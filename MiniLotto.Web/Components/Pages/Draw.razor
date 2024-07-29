@@ -30,9 +30,14 @@
                     </div>
                     <h5 class="mt-4">Winners:</h5>
                     <ul class="list-group">
-                        @foreach (var winner in drawResult?.Winners ?? new List<string>())
+                        @foreach (var winner in drawResult?.Winners ?? new List<WinnerDetail>())
                         {
-                            <li class="list-group-item" style="font-size:25px; color:indianred; border-block:groove">@winner</li>
+                            <li class="list-group-item" style="font-size:20px;">
+                                <strong>@winner.Name</strong> -
+                                <span class="badge bg-success">
+                                    @string.Join(", ", winner.WinningNumbers)
+                                </span>
+                            </li>
                         }
                     </ul>
                 </div>
